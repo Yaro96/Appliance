@@ -14,5 +14,6 @@ units.patch('/program/:id', controller.setProgram);
 units.patch('/centrifuge/:id', controller.setCentrifuge);
 units.patch('/timer/:id', controller.setTimer);
 units.get('/toggleIntensive/:id', controller.toggleIntensive);
+units.delete('/delete/:id', controller.deleteUnit);
 
 module.exports = units;

@@ -303,6 +303,29 @@ function toggleIntensive(id, callback) {
     });
 }
 
+function deleteUnit(id, callback) {
+    let query1 = "SELECT `id` FROM `units` WHERE id=?"
+    let query2 = "DELETE FROM units WHERE id = ?";
+    db.query(query1, [id], (err, res) => {
+        if (err) {
+            console.log(err);
+            return callback(err);
+        } else {
+            if (res.length == 0)
+                return callback(null, 404);
+            else
+                db.query(query2, [id], (err, res) => {
+                    if (err) {
+                        console.log(err);
+                        return callback(err);
+                    } else {
+                        return callback(null, res);
+                    }
+                });
+        }
+    });
+}
+
 
 module.exports = {
     getAll,
@@ -315,5 +338,6 @@ module.exports = {
     setProgram,
     setCentrifuge,
     setTimer,
-    toggleIntensive
+    toggleIntensive,
+    deleteUnit
 };

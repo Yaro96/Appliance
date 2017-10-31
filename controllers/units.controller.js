@@ -237,6 +237,23 @@ function toggleIntensive(req, res) {
         res.status(400).send({success: false, message: 'Bad Request'});
 }
 
+function deleteUnit(req, res) {
+    let id = req.params.id;
+    if (validator.validateInt(id)) {
+        model.deleteUnit(id, (err, result) => {
+            if (err) {
+                res.status(500).send({success: false, message: 'Internal server error'});
+            } else {
+                if (result == 404)
+                    res.status(404).send({success: false, message: 'Unit not found'});
+                else
+                    res.status(200).send({success: true, message: "Unit deleted"});
+            }
+        });
+    } else
+        res.status(400).send({success: false, message: 'Bad Request'});
+}
+
 
 module.exports = {
     getAll,
@@ -249,5 +266,6 @@ module.exports = {
     setProgram,
     setCentrifuge,
     setTimer,
-    toggleIntensive
+    toggleIntensive,
+    deleteUnit
 };
